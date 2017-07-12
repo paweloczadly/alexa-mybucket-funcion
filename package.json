@@ -4,7 +4,8 @@
   "description": "Alexa skill for reading S3 bucket.",
   "main": "mybucket.js",
   "dependencies": {
-    "alexa-app": "^4.0.1"
+    "alexa-app": "^4.0.1",
+    "aws-sdk": "^2.82.0"
   },
     "devDependencies": {
     "mocha": "^3.4.2",

@@ -69,6 +69,33 @@ describe('My Bucket', function() {
         }
       })
       .expect(200).then(function(response) {
+        console.log(response.body.response)
+
+        var ssml = response.body.response.outputSpeech.ssml;
+        return expect(ssml).to.eql('<speak>I am reading S3 bucket test.</speak>');
+      });
+  });
+
+  it('responds to a list event', function() {
+    return request(server)
+      .post('/mybucket')
+      .send({
+        request: {
+          type: 'IntentRequest',
+          intent: {
+            name: 'ListIntent',
+            slots: {
+              BUCKET: {
+                name: "BUCKET",
+                value: "test"
+              }
+            }
+          }
+        }
+      })
+      .expect(200).then(function(response) {
+        console.log(response.body.response)
+
         var ssml = response.body.response.outputSpeech.ssml;
         return expect(ssml).to.eql('<speak>I am reading S3 bucket test.</speak>');
       });
