@@ -30,27 +30,26 @@ app.intent('ListIntent', {
       'list all files from {-|BUCKET} bucket'
     ]
   },
-  function(req, res) {
-    var value = req.slot('BUCKET')
-    var params = {
+  function(req, res, cb) {
+    let value = req.slot('BUCKET')
+    let params = {
       Bucket: value
     };
-    // default answer:
-    var answer = `Please check if you have proper access rights to S3 bucket ${value}.`
 
-    s3.listObjects(params, function(err, data) {
-      answer = "dupa"
-      if (err) {
-        answer = `There was a problem with listing ${value}.`
-      }
-      else {
-        answer = `Here are your files in S3 bucket ${value}:`;
-        data.Contents.forEach(function(elem) {
-          res.say(elem.Key)
-        });
-      }
-    });
-    res.say(answer)
+    return new Promise((resolve, reject) => {
+      s3.listObjects(params, (err, data) => {
+        let answer
+        if (err) {
+          answer = `There was a problem with listing ${value}.`;
+          console.log(err, err.stack)
+        }
+        else {
+          answer = `Here are your files in S3 bucket ${value}:`;
+          data.Contents.forEach((elem) => answer += ` ${elem.Key}`);
+        }
+        resolve(answer)
+      });
+    }).then((msg) => res.say(msg));
   }
 );
 

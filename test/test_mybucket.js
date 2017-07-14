@@ -76,7 +76,7 @@ describe('My Bucket', function() {
       });
   });
 
-  it('responds to a list event', function() {
+  it('responds to a list event without access', function() {
     return request(server)
       .post('/mybucket')
       .send({
@@ -97,7 +97,7 @@ describe('My Bucket', function() {
         console.log(response.body.response)
 
         var ssml = response.body.response.outputSpeech.ssml;
-        return expect(ssml).to.eql('<speak>I am reading S3 bucket test.</speak>');
+        return expect(ssml).to.eql('<speak>There was a problem with listing test.</speak>');
       });
   });
 
