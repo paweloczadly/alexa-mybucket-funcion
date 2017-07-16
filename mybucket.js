@@ -31,20 +31,20 @@ app.intent('ListIntent', {
     ]
   },
   function(req, res, cb) {
-    let value = req.slot('BUCKET')
+    let bucket = req.slot('BUCKET')
     let params = {
-      Bucket: value
+      Bucket: bucket
     };
 
     return new Promise((resolve, reject) => {
       s3.listObjects(params, (err, data) => {
         let answer
         if (err) {
-          answer = `There was a problem with listing ${value}.`;
+          answer = `There was a problem with listing ${bucket}.`;
           console.log(err, err.stack)
         }
         else {
-          answer = `Here are your files in S3 bucket ${value}:`;
+          answer = `Here are your files in S3 bucket ${bucket}:`;
           data.Contents.forEach((elem) => answer += ` ${elem.Key}`);
         }
         resolve(answer)
