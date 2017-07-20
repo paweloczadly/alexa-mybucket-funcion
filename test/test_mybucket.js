@@ -72,7 +72,7 @@ describe('My Bucket', function() {
         console.log(response.body.response)
 
         var ssml = response.body.response.outputSpeech.ssml;
-        return expect(ssml).to.eql('<speak>I am reading S3 bucket test.</speak>');
+        return expect(ssml).to.eql('<speak>There was a problem with reading the content of undefined from test</speak>');
       });
   });
 
