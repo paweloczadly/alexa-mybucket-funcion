@@ -37,8 +37,6 @@ app.intent('ReadIntent', {
         let answer
         if (err) {
           answer = `There was a problem with reading the content of ${key} from ${bucket}`;
-          console.log(bucket);
-          console.log(answer);
           console.log(err, err.stack);
         } else {
           answer = data.Body.toString('ascii');
