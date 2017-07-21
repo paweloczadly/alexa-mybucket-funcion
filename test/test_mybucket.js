@@ -99,7 +99,7 @@ describe('My Bucket', function() {
       .expect(200).then(function(response) {
         console.log(response.body.response);
         var ssml = response.body.response.outputSpeech.ssml;
-        return expect(ssml).to.eql('<speak>Here are your files in S3 bucket a-test-sandbox-bucket: test</speak>');
+        return expect(ssml).to.eql('<speak>Here are your files in S3 bucket a-test-sandbox-bucket: about test</speak>');
       });
   });
 
