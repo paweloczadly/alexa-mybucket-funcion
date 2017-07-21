@@ -62,6 +62,10 @@ describe('My Bucket', function() {
             slots: {
               BUCKET: {
                 name: "BUCKET",
+                value: "red"
+              },
+              OBJECT: {
+                name: "OBJECT",
                 value: "test"
               }
             }
@@ -69,14 +73,13 @@ describe('My Bucket', function() {
         }
       })
       .expect(200).then(function(response) {
-        console.log(response.body.response)
-
+        console.log(response.body.response);
         var ssml = response.body.response.outputSpeech.ssml;
-        return expect(ssml).to.eql('<speak>There was a problem with reading the content of undefined from test</speak>');
+        return expect(ssml).to.eql('<speak>It is my private S3 bucket</speak>');
       });
   });
 
-  it('responds to a list event without access', function() {
+  it('responds to a list event', function() {
     return request(server)
       .post('/mybucket')
       .send({
@@ -87,17 +90,16 @@ describe('My Bucket', function() {
             slots: {
               BUCKET: {
                 name: "BUCKET",
-                value: "test"
+                value: "red"
               }
             }
           }
         }
       })
       .expect(200).then(function(response) {
-        console.log(response.body.response)
-
+        console.log(response.body.response);
         var ssml = response.body.response.outputSpeech.ssml;
-        return expect(ssml).to.eql('<speak>There was a problem with listing test.</speak>');
+        return expect(ssml).to.eql('<speak>Here are your files in S3 bucket a-test-sandbox-bucket: test</speak>');
       });
   });
 
